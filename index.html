@@ -260,6 +260,11 @@
             user-select: none;
         }
 
+        .number-table td.large-number {
+            font-size: 2rem;
+            padding: 20px 12px;
+        }
+
         .number-table td::before {
             content: '';
             position: absolute;
@@ -443,6 +448,28 @@
             box-shadow: 0 8px 25px rgba(23, 162, 184, 0.6);
         }
 
+        .skip-btn {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+        }
+
+        .skip-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(108, 117, 125, 0.6);
+        }
+
+        .zoom-btn {
+            background: linear-gradient(135deg, #6f42c1 0%, #563d7c 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(111, 66, 193, 0.4);
+        }
+
+        .zoom-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(111, 66, 193, 0.6);
+        }
+
         .result {
             text-align: center;
             font-size: 1.2rem;
@@ -471,6 +498,22 @@
             border: 2px solid #D21034;
         }
 
+        .result.info {
+            background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+            color: #0c5460;
+            border: 2px solid #17a2b8;
+        }
+
+        .feedback-message {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            border-right: 3px solid #FFD700;
+        }
+
         .hint-box {
             background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
             border-right: 5px solid #FFD700;
@@ -480,6 +523,67 @@
             display: none;
             color: #856404;
             animation: fadeIn 0.3s ease;
+        }
+
+        .step-by-step {
+            background: linear-gradient(135deg, #e8f4f8 0%, #d1ecf1 100%);
+            border-right: 5px solid #17a2b8;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 12px;
+            display: none;
+            color: #0c5460;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .step-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #006233;
+        }
+
+        .step-content {
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .step-example {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 5px 0;
+            border: 1px solid #b8daff;
+        }
+
+        .step-highlight {
+            color: #D21034;
+            font-weight: bold;
+        }
+
+        .feedback-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 2px solid #dee2e6;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .feedback-title {
+            font-weight: bold;
+            color: #006233;
+            margin-bottom: 10px;
+        }
+
+        .feedback-list {
+            margin: 0;
+            padding-right: 20px;
+        }
+
+        .feedback-item {
+            margin-bottom: 8px;
+            line-height: 1.5;
         }
 
         .footer {
@@ -584,6 +688,11 @@
                 font-size: 1.3rem;
             }
 
+            .number-table td.large-number {
+                font-size: 1.6rem;
+                padding: 14px 10px;
+            }
+
             .stat-box {
                 padding: 10px 15px;
                 min-width: 80px;
@@ -621,6 +730,11 @@
             .number-table td {
                 padding: 10px 5px;
                 font-size: 1.1rem;
+            }
+
+            .number-table td.large-number {
+                font-size: 1.3rem;
+                padding: 12px 8px;
             }
 
             .stat-box {
@@ -704,7 +818,12 @@
 
         <div class="game-container">
             <section class="table-section" aria-label="جدول الأرقام">
-                <h2 class="table-title">🔢 اختر الأعداد الصحيحة 🔢</h2>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h2 class="table-title">🔢 اختر الأعداد الصحيحة 🔢</h2>
+                    <button class="zoom-btn" id="zoom-btn" aria-label="تكبير/تصغير الأرقام">
+                        🔍 تكبير
+                    </button>
+                </div>
                 <table class="number-table" id="number-table" role="grid" aria-label="اختر الأعداد القابلة للقسمة">
                     <tbody>
                         <tr>
@@ -735,8 +854,19 @@
                     <div class="timer-progress" id="timer-progress"></div>
                 </div>
 
+                <div class="step-by-step" id="step-by-step">
+                    <div class="step-title">📝 شرح خطوة بخطوة:</div>
+                    <div id="explanation-steps"></div>
+                </div>
+
+                <div class="feedback-box" id="feedback-box">
+                    <div class="feedback-title">💬 ملاحظات مفيدة:</div>
+                    <ul class="feedback-list" id="feedback-list"></ul>
+                </div>
+
                 <nav class="controls" style="margin-top: 20px;" aria-label="أزرار التحكم">
                     <button class="check-btn" id="check-btn" disabled aria-label="تحقق من الإجابة">✓ تحقق من الإجابة</button>
+                    <button class="skip-btn" id="skip-btn" aria-label="تخطي السؤال">⏭️ تخطي</button>
                     <button class="new-game-btn" id="new-game-btn" aria-label="سؤال جديد">🔄 سؤال جديد</button>
                     <button class="hint-btn" id="hint-btn" aria-label="إظهار المساعدة" aria-expanded="false">💡 مساعدة</button>
                 </nav>
@@ -788,6 +918,8 @@
                 var checkButton = document.getElementById('check-btn');
                 var newGameButton = document.getElementById('new-game-btn');
                 var hintButton = document.getElementById('hint-btn');
+                var skipButton = document.getElementById('skip-btn');
+                var zoomButton = document.getElementById('zoom-btn');
                 var resultElement = document.getElementById('result');
                 var scoreElement = document.getElementById('score');
                 var timerElement = document.getElementById('timer');
@@ -795,6 +927,10 @@
                 var timerProgress = document.getElementById('timer-progress');
                 var questionNumElement = document.getElementById('question-num');
                 var hintBox = document.getElementById('hint-box');
+                var stepByStep = document.getElementById('step-by-step');
+                var explanationSteps = document.getElementById('explanation-steps');
+                var feedbackBox = document.getElementById('feedback-box');
+                var feedbackList = document.getElementById('feedback-list');
 
                 // متغيرات اللعبة
                 var selectedNumbers = [];
@@ -806,6 +942,8 @@
                 var timerInterval = null;
                 var currentNumbers = [];
                 var TOTAL_TIME = 180;
+                var isZoomed = false;
+                var audioEnabled = false;
 
                 // قواعد القسمة المطلوبة فقط
                 var hints = {
@@ -846,6 +984,7 @@
                     currentDivisor = possibleDivisors[Math.floor(Math.random() * possibleDivisors.length)];
                     divisorElement.textContent = currentDivisor;
                     updateHint();
+                    generateStepByStepExplanation();
                 }
 
                 // تحديث التلميح
@@ -854,6 +993,63 @@
                     hintBox.style.display = 'none';
                     hintBox.setAttribute('aria-hidden', 'true');
                     hintButton.setAttribute('aria-expanded', 'false');
+                }
+
+                // توليد شرح خطوة بخطوة
+                function generateStepByStepExplanation() {
+                    var explanation = '';
+                    
+                    switch(currentDivisor) {
+                        case 2:
+                            explanation = '<div class="step-content">✓ انظر إلى <span class="step-highlight">رقم الآحاد</span> فقط</div>' +
+                                        '<div class="step-content">✓ إذا كان رقم الآحاد أحد هذه الأرقام: <span class="step-highlight">0, 2, 4, 6, 8</span></div>' +
+                                        '<div class="step-content">✓ فالعـدد يقبل القسمة على 2</div>' +
+                                        '<div class="step-example">مثال: العدد 46 → رقم الآحاد هو 6 (زوجي) ← يقبل القسمة على 2</div>';
+                            break;
+                        case 3:
+                            explanation = '<div class="step-content">✓ اجمع <span class="step-highlight">جميع أرقام العدد</span></div>' +
+                                        '<div class="step-content">✓ إذا كان <span class="step-highlight">المجموع</span> يقبل القسمة على 3</div>' +
+                                        '<div class="step-content">✓ فالعـدد يقبل القسمة على 3</div>' +
+                                        '<div class="step-example">مثال: العدد 234 → 2+3+4=9 ← 9÷3=3 ← يقبل القسمة على 3</div>';
+                            break;
+                        case 4:
+                            explanation = '<div class="step-content">✓ انظر إلى <span class="step-highlight">العدد المكون من آخر رقمين</span></div>' +
+                                        '<div class="step-content">✓ إذا كان هذا العدد <span class="step-highlight">يقبل القسمة على 4</span></div>' +
+                                        '<div class="step-content">✓ فالعـدد يقبل القسمة على 4</div>' +
+                                        '<div class="step-example">مثال: العدد 732 → آخر رقمين 32 ← 32÷4=8 ← يقبل القسمة على 4</div>';
+                            break;
+                        case 5:
+                            explanation = '<div class="step-content">✓ انظر إلى <span class="step-highlight">رقم الآحاد</span> فقط</div>' +
+                                        '<div class="step-content">✓ إذا كان رقم الآحاد <span class="step-highlight">0 أو 5</span></div>' +
+                                        '<div class="step-content">✓ فالعـدد يقبل القسمة على 5</div>' +
+                                        '<div class="step-example">مثال: العدد 85 → رقم الآحاد هو 5 ← يقبل القسمة على 5</div>';
+                            break;
+                        case 9:
+                            explanation = '<div class="step-content">✓ اجمع <span class="step-highlight">جميع أرقام العدد</span></div>' +
+                                        '<div class="step-content">✓ إذا كان <span class="step-highlight">المجموع</span> يقبل القسمة على 9</div>' +
+                                        '<div class="step-content">✓ فالعـدد يقبل القسمة على 9</div>' +
+                                        '<div class="step-example">مثال: العدد 729 → 7+2+9=18 ← 18÷9=2 ← يقبل القسمة على 9</div>';
+                            break;
+                    }
+                    
+                    explanationSteps.innerHTML = explanation;
+                    stepByStep.style.display = 'none';
+                }
+
+                // إظهار ملاحظات مفيدة
+                function showFeedback(isCorrect) {
+                    feedbackBox.style.display = 'block';
+                    
+                    if (isCorrect) {
+                        feedbackList.innerHTML = '<li class="feedback-item">🎯 أحسنت! لقد فهمت القاعدة بشكل صحيح</li>' +
+                                               '<li class="feedback-item">💪 استمر في التدرب لتحسين سرعتك</li>' +
+                                               '<li class="feedback-item">🌟 حاول حل السؤال التالي في وقت أقل</li>';
+                    } else {
+                        feedbackList.innerHTML = '<li class="feedback-item">📚 راجع القاعدة مرة أخرى قبل الإجابة</li>' +
+                                               '<li class="feedback-item">⏰ خذ وقتك في التفكير قبل الاختيار</li>' +
+                                               '<li class="feedback-item">✅ تأكد من اختيار جميع الأعداد الصحيحة فقط</li>' +
+                                               '<li class="feedback-item">💡 استخدم زر المساعدة إذا واجهتك صعوبة</li>';
+                    }
                 }
 
                 // بدء المؤقت
@@ -910,8 +1106,13 @@
 
                     resultElement.textContent = '⏰ انتهى الوقت! الأعداد الصحيحة: ' + correctNumbers.join('، ');
                     resultElement.className = 'result error';
+                    
+                    var feedback = '<div class="feedback-message">⏳ الوقت مهم في الرياضيات! حاول الإجابة بسرعة أكبر في السؤال القادم.</div>';
+                    resultElement.innerHTML = resultElement.textContent + feedback;
+                    
                     resultElement.style.display = 'block';
                     checkButton.disabled = true;
+                    showFeedback(false);
                 }
 
                 // تهيئة اللعبة
@@ -926,6 +1127,8 @@
                     isGameActive = true;
                     resultElement.style.display = 'none';
                     hintBox.style.display = 'none';
+                    stepByStep.style.display = 'none';
+                    feedbackBox.style.display = 'none';
                     hintBox.setAttribute('aria-hidden', 'true');
                     checkButton.disabled = true;
                     timerBox.classList.remove('warning');
@@ -1034,17 +1237,55 @@
 
                     if (isPerfect) {
                         score += 2;
-                        resultElement.textContent = '🎉 أحسنت! إجابة صحيحة تماماً! +2 نقطة';
+                        var message = '🎉 أحسنت! إجابة صحيحة تماماً! +2 نقطة';
+                        var feedback = '<div class="feedback-message">✨ ممتاز! لقد فهمت قاعدة القسمة على ' + currentDivisor + ' بشكل صحيح.</div>';
+                        resultElement.innerHTML = message + feedback;
                         resultElement.className = 'result success';
                         createConfetti();
+                        showFeedback(true);
                     } else {
                         score -= 1;
-                        resultElement.textContent = '❌ ليس تماماً! الأعداد الصحيحة: ' + correctNumbers.join('، ') + ' | -1 نقطة';
+                        var message = '❌ ليس تماماً! الأعداد الصحيحة: ' + correctNumbers.join('، ') + ' | -1 نقطة';
+                        var feedback = '<div class="feedback-message">📝 حاول التركيز أكثر في المرة القادمة. راجع القاعدة واستخدم التلميحات.</div>';
+                        resultElement.innerHTML = message + feedback;
                         resultElement.className = 'result error';
+                        showFeedback(false);
                     }
 
                     scoreElement.textContent = score;
                     checkButton.disabled = true;
+                    stepByStep.style.display = 'block';
+                }
+
+                // تخطي السؤال الحالي
+                function skipQuestion() {
+                    if (!isGameActive) return;
+                    
+                    clearInterval(timerInterval);
+                    isGameActive = false;
+                    
+                    // لا نقوم بخصم نقاط للتخطي
+                    resultElement.textContent = '⏭️ تخطيت السؤال. جرب السؤال القادم!';
+                    resultElement.className = 'result info';
+                    resultElement.style.display = 'block';
+                    
+                    // إظهار الإجابات الصحيحة مع شرح
+                    var correctNumbers = [];
+                    for (var i = 0; i < numberCells.length; i++) {
+                        var cell = numberCells[i];
+                        var number = parseInt(cell.textContent, 10);
+                        if (isDivisible(number, currentDivisor)) {
+                            correctNumbers.push(number);
+                            cell.classList.add('correct');
+                        }
+                    }
+                    
+                    var feedback = '<div class="feedback-message">🔍 الأعداد الصحيحة هي: ' + correctNumbers.join('، ') + '<br>💡 لا تتردد في استخدام زر المساعدة للفهم الأفضل.</div>';
+                    resultElement.innerHTML = resultElement.textContent + feedback;
+                    
+                    checkButton.disabled = true;
+                    stepByStep.style.display = 'block';
+                    showFeedback(false);
                 }
 
                 // سؤال جديد
@@ -1052,6 +1293,23 @@
                     questionNumber++;
                     questionNumElement.textContent = questionNumber;
                     initGame();
+                }
+
+                // تكبير/تصغير الأرقام
+                function toggleZoom() {
+                    isZoomed = !isZoomed;
+                    
+                    for (var i = 0; i < numberCells.length; i++) {
+                        var cell = numberCells[i];
+                        if (isZoomed) {
+                            cell.classList.add('large-number');
+                        } else {
+                            cell.classList.remove('large-number');
+                        }
+                    }
+                    
+                    zoomButton.textContent = isZoomed ? '🔍 تصغير' : '🔍 تكبير';
+                    zoomButton.setAttribute('aria-label', isZoomed ? 'تصغير الأرقام' : 'تكبير الأرقام');
                 }
 
                 // معالج النقر على الخلايا
@@ -1093,12 +1351,25 @@
 
                 checkButton.addEventListener('click', checkAnswer);
                 newGameButton.addEventListener('click', nextQuestion);
+                skipButton.addEventListener('click', skipQuestion);
+                zoomButton.addEventListener('click', toggleZoom);
 
                 hintButton.addEventListener('click', function() {
                     var isHidden = hintBox.style.display === 'none';
                     hintBox.style.display = isHidden ? 'block' : 'none';
                     hintBox.setAttribute('aria-hidden', isHidden ? 'false' : 'true');
                     hintButton.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+                });
+
+                // إضافة اختصارات لوحة المفاتيح
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        // الهروب يظهر/يخفي المساعدة
+                        hintBox.style.display = hintBox.style.display === 'none' ? 'block' : 'none';
+                    } else if (e.key === ' ' && !e.target.matches('[data-number]')) {
+                        // المسافة تختار/تلغي اختيار جميع الخلايا
+                        e.preventDefault();
+                    }
                 });
 
                 // بدء اللعبة
