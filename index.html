@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="لعبة تعليمية تفاعلية لتعلم قواعد قابلية القسمة على 2، 3، 4، 5، 9 - تصميم الأستاذ بوخليفة محمد">
+    <meta name="keywords" content="لعبة, قابلية القسمة, رياضيات, تعليم, الجزائر">
+    <meta name="author" content="الأستاذ بوخليفة محمد">
+    <meta name="theme-color" content="#006233">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta property="og:title" content="لعبة قابلية القسمة">
+    <meta property="og:description" content="لعبة تعليمية تفاعلية لتعلم قواعد قابلية القسمة">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ar_DZ">
+    <link rel="canonical" href="/">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔢</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔢</text></svg>">
+    <title>لعبة قابلية القسمة | الأستاذ بوخليفة محمد</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #006233 0%, #004d28 50%, #003d1f 100%);
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #333;
+            position: relative;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(210, 16, 52, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+            will-change: transform;
+        }
+
+        .star {
+            position: absolute;
+            background: #FFD700;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+            will-change: opacity, transform;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 20px;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                0 0 0 3px #FFD700,
+                0 0 30px rgba(255, 215, 0, 0.3);
+            padding: 30px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        h1 {
+            color: #006233;
+            margin: 0 0 10px 0;
+            font-size: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::before, h1::after {
+            content: '★';
+            color: #FFD700;
+            margin: 0 10px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .algeria-flag {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .flag-stripe {
+            width: 40px;
+            height: 8px;
+            border-radius: 4px;
+        }
+
+        .flag-green { background: #006233; }
+        .flag-white { background: #ffffff; border: 1px solid #ddd; }
+        .flag-red { background: #D21034; }
+
+        .description {
+            text-align: center;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1rem;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #006233 0%, #004d28 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            text-align: center;
+            flex: 1;
+            min-width: 100px;
+            box-shadow: 0 5px 15px rgba(0, 98, 51, 0.3);
+            border: 2px solid #FFD700;
+            transition: transform 0.3s;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-box.timer {
+            background: linear-gradient(135deg, #D21034 0%, #a01029 100%);
+            box-shadow: 0 5px 15px rgba(210, 16, 52, 0.3);
+        }
+
+        .stat-box.timer.warning {
+            animation: timerPulse 0.5s infinite;
+        }
+
+        @keyframes timerPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); background: #ff0000; }
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #FFD700;
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .table-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 
+                inset 0 2px 10px rgba(0, 0, 0, 0.05),
+                0 0 0 2px rgba(255, 215, 0, 0.3);
+        }
+
+        .table-title {
+            color: #006233;
+            margin: 0 0 15px 0;
+            text-align: center;
+            font-size: 1.2rem;
+            border-bottom: 3px solid #FFD700;
+            padding-bottom: 10px;
+        }
+
+        .number-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 8px;
+        }
+
+        .number-table td {
+            text-align: center;
+            padding: 18px 10px;
+            font-size: 1.6rem;
+            font-weight: bold;
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .number-table td::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .number-table td:hover::before {
+            left: 100%;
+        }
+
+        .number-table td:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            border-color: #FFD700;
+        }
+
+        .number-table td:active {
+            transform: scale(0.95);
+        }
+
+        .number-table td.selected {
+            background: linear-gradient(135deg, #006233 0%, #004d28 100%);
+            color: white;
+            border-color: #FFD700;
+            transform: scale(1.08);
+            box-shadow: 0 8px 25px rgba(0, 98, 51, 0.4);
+        }
+
+        .number-table td.correct {
+            background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+            color: white;
+            border-color: #FFD700;
+            animation: correctPop 0.5s ease;
+        }
+
+        @keyframes correctPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .number-table td.incorrect {
+            background: linear-gradient(135deg, #D21034 0%, #a01029 100%);
+            color: white;
+            border-color: #FFD700;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .question-section {
+            background: linear-gradient(135deg, #006233 0%, #004d28 100%);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 98, 51, 0.3);
+            border: 3px solid #FFD700;
+        }
+
+        .question-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .divisor {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #006233;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            min-width: 80px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
+            animation: glow 2s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5); }
+            50% { box-shadow: 0 5px 30px rgba(255, 215, 0, 0.8); }
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+            position: relative;
+            overflow: hidden;
+            -webkit-user-select: none;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
+        button:active {
+            transform: scale(0.95) !important;
+        }
+
+        .check-btn {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #006233;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .check-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+        }
+
+        .check-btn:disabled {
+            background: #95a5a6;
+            color: #666;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .new-game-btn {
+            background: linear-gradient(135deg, #D21034 0%, #a01029 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(210, 16, 52, 0.4);
+        }
+
+        .new-game-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(210, 16, 52, 0.6);
+        }
+
+        .hint-btn {
+            background: linear-gradient(135deg, #17a2b8 0%, #117a8b 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(23, 162, 184, 0.4);
+        }
+
+        .hint-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(23, 162, 184, 0.6);
+        }
+
+        .result {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 20px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result.success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            border: 2px solid #28a745;
+        }
+
+        .result.error {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+            border: 2px solid #D21034;
+        }
+
+        .hint-box {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
+            border-right: 5px solid #FFD700;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 12px;
+            display: none;
+            color: #856404;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: white;
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-text {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.2) 100%);
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            border: 2px solid #FFD700;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer-text span {
+            color: #FFD700;
+            font-weight: bold;
+        }
+
+        .timer-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .timer-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+            border-radius: 4px;
+            transition: width 0.1s linear;
+            will-change: width;
+        }
+
+        .timer-progress.danger {
+            background: linear-gradient(90deg, #D21034, #ff0000);
+        }
+
+        .confetti {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+            will-change: top, opacity;
+        }
+
+        /* Loading state */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+        }
+
+        .loading::after {
+            content: '';
+            width: 40px;
+            height: 40px;
+            border: 4px solid #FFD700;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 15px;
+                border-radius: 15px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h1::before, h1::after {
+                display: none;
+            }
+
+            .number-table {
+                border-spacing: 5px;
+            }
+
+            .number-table td {
+                padding: 12px 8px;
+                font-size: 1.3rem;
+            }
+
+            .stat-box {
+                padding: 10px 15px;
+                min-width: 80px;
+            }
+
+            .stat-value {
+                font-size: 1.2rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .question-text {
+                font-size: 1rem;
+            }
+
+            .divisor {
+                font-size: 1.5rem;
+                padding: 10px 25px;
+            }
+
+            .footer-text {
+                font-size: 0.85rem;
+                padding: 12px 20px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .number-table td {
+                padding: 10px 5px;
+                font-size: 1.1rem;
+            }
+
+            .stat-box {
+                padding: 8px 10px;
+                min-width: 70px;
+            }
+
+            .stat-value {
+                font-size: 1rem;
+            }
+
+            .description {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Landscape mode on mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .container {
+                margin-top: 10px;
+                padding: 15px;
+            }
+
+            .stats-bar {
+                margin-bottom: 15px;
+            }
+
+            .game-container {
+                gap: 15px;
+            }
+        }
+
+        /* Reduce motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+            .stars, .confetti {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars" aria-hidden="true"></div>
+
+    <main class="container" role="main">
+        <header class="header">
+            <div class="algeria-flag" aria-label="علم الجزائر">
+                <div class="flag-stripe flag-green"></div>
+                <div class="flag-stripe flag-white"></div>
+                <div class="flag-stripe flag-red"></div>
+            </div>
+            <h1>لعبة قابلية القسمة</h1>
+            <p class="description">اختر جميع الأعداد التي تقبل القسمة على الرقم المطلوب<br>✨ الإجابة الصحيحة = +2 نقطة | الخاطئة = -1 نقطة ✨</p>
+        </header>
+
+        <div class="stats-bar" role="status" aria-live="polite">
+            <div class="stat-box">
+                <div class="stat-label">النقاط</div>
+                <div class="stat-value" id="score" aria-label="النقاط">0</div>
+            </div>
+            <div class="stat-box timer" id="timer-box">
+                <div class="stat-label">الوقت</div>
+                <div class="stat-value" id="timer" aria-label="الوقت المتبقي">180</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">السؤال</div>
+                <div class="stat-value" id="question-num" aria-label="رقم السؤال">1</div>
+            </div>
+        </div>
+
+        <div class="game-container">
+            <section class="table-section" aria-label="جدول الأرقام">
+                <h2 class="table-title">🔢 اختر الأعداد الصحيحة 🔢</h2>
+                <table class="number-table" id="number-table" role="grid" aria-label="اختر الأعداد القابلة للقسمة">
+                    <tbody>
+                        <tr>
+                            <td data-number role="gridcell" tabindex="0">0</td>
+                            <td data-number role="gridcell" tabindex="0">0</td>
+                            <td data-number role="gridcell" tabindex="0">0</td>
+                            <td data-number role="gridcell" tabindex="0">0</td>
+                            <td data-number role="gridcell" tabindex="0">0</td>
+                        </tr>
+                        <tr>
+                            <td data-number role="gridcell" tabindex="0">0</td>
+                            <td data-number role="gridcell" tabindex="0">0</td>
+                            <td data-number role="gridcell" tabindex="0">0</td>
+                            <td data-number role="gridcell" tabindex="0">0</td>
+                            <td data-number role="gridcell" tabindex="0">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="question-section" aria-label="السؤال">
+                <div class="question-box">
+                    <span class="question-text">اختر الأعداد التي تقبل القسمة على:</span>
+                    <div class="divisor" id="divisor" aria-label="المقسوم عليه">3</div>
+                </div>
+
+                <div class="timer-bar" role="progressbar" aria-valuemin="0" aria-valuemax="180" aria-valuenow="180">
+                    <div class="timer-progress" id="timer-progress"></div>
+                </div>
+
+                <nav class="controls" style="margin-top: 20px;" aria-label="أزرار التحكم">
+                    <button class="check-btn" id="check-btn" disabled aria-label="تحقق من الإجابة">✓ تحقق من الإجابة</button>
+                    <button class="new-game-btn" id="new-game-btn" aria-label="سؤال جديد">🔄 سؤال جديد</button>
+                    <button class="hint-btn" id="hint-btn" aria-label="إظهار المساعدة" aria-expanded="false">💡 مساعدة</button>
+                </nav>
+
+                <div class="hint-box" id="hint-box" role="tooltip" aria-hidden="true"></div>
+                <div class="result" id="result" role="alert" aria-live="assertive"></div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-text">
+            تم تصميم هذا التطبيق من طرف الأستاذ <span>بوخليفة محمد</span> 🇩🇿
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // التحقق من دعم المتصفح
+            if (!document.addEventListener) {
+                console.warn('المتصفح غير مدعوم');
+                return;
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                // إنشاء النجوم المتلألئة
+                var starsContainer = document.getElementById('stars');
+                if (starsContainer) {
+                    var fragment = document.createDocumentFragment();
+                    for (var i = 0; i < 50; i++) {
+                        var star = document.createElement('div');
+                        star.className = 'star';
+                        star.style.left = Math.random() * 100 + '%';
+                        star.style.top = Math.random() * 100 + '%';
+                        var size = Math.random() * 4 + 2 + 'px';
+                        star.style.width = size;
+                        star.style.height = size;
+                        star.style.animationDelay = Math.random() * 2 + 's';
+                        fragment.appendChild(star);
+                    }
+                    starsContainer.appendChild(fragment);
+                }
+
+                // عناصر DOM
+                var numberCells = document.querySelectorAll('[data-number]');
+                var divisorElement = document.getElementById('divisor');
+                var checkButton = document.getElementById('check-btn');
+                var newGameButton = document.getElementById('new-game-btn');
+                var hintButton = document.getElementById('hint-btn');
+                var resultElement = document.getElementById('result');
+                var scoreElement = document.getElementById('score');
+                var timerElement = document.getElementById('timer');
+                var timerBox = document.getElementById('timer-box');
+                var timerProgress = document.getElementById('timer-progress');
+                var questionNumElement = document.getElementById('question-num');
+                var hintBox = document.getElementById('hint-box');
+
+                // متغيرات اللعبة
+                var selectedNumbers = [];
+                var currentDivisor = 3;
+                var score = 0;
+                var questionNumber = 1;
+                var isGameActive = true;
+                var timeLeft = 180;
+                var timerInterval = null;
+                var currentNumbers = [];
+                var TOTAL_TIME = 180;
+
+                // قواعد القسمة المطلوبة فقط
+                var hints = {
+                    2: "العدد يقبل القسمة على 2 إذا كان رقم الآحاد زوجياً (0، 2، 4، 6، 8)",
+                    3: "العدد يقبل القسمة على 3 إذا كان مجموع أرقامه يقبل القسمة على 3",
+                    4: "العدد يقبل القسمة على 4 إذا كان العدد المكون من آخر رقمين يقبل القسمة على 4",
+                    5: "العدد يقبل القسمة على 5 إذا كان رقم الآحاد 0 أو 5",
+                    9: "العدد يقبل القسمة على 9 إذا كان مجموع أرقامه يقبل القسمة على 9"
+                };
+
+                // المقسومات المتاحة فقط
+                var possibleDivisors = [2, 3, 4, 5, 9];
+
+                // توليد أرقام عشوائية
+                function generateRandomNumbers() {
+                    currentNumbers = [];
+                    var usedNumbers = {};
+
+                    while (currentNumbers.length < 10) {
+                        var num = Math.floor(Math.random() * 98) + 2;
+                        if (!usedNumbers[num]) {
+                            usedNumbers[num] = true;
+                            currentNumbers.push(num);
+                        }
+                    }
+
+                    for (var i = 0; i < numberCells.length; i++) {
+                        var cell = numberCells[i];
+                        cell.textContent = currentNumbers[i];
+                        cell.className = '';
+                        cell.dataset.number = currentNumbers[i];
+                        cell.setAttribute('aria-selected', 'false');
+                    }
+                }
+
+                // توليد مقسوم عشوائي
+                function generateRandomDivisor() {
+                    currentDivisor = possibleDivisors[Math.floor(Math.random() * possibleDivisors.length)];
+                    divisorElement.textContent = currentDivisor;
+                    updateHint();
+                }
+
+                // تحديث التلميح
+                function updateHint() {
+                    hintBox.innerHTML = '<strong>💡 تلميح:</strong> ' + hints[currentDivisor];
+                    hintBox.style.display = 'none';
+                    hintBox.setAttribute('aria-hidden', 'true');
+                    hintButton.setAttribute('aria-expanded', 'false');
+                }
+
+                // بدء المؤقت
+                function startTimer() {
+                    timeLeft = TOTAL_TIME;
+                    timerElement.textContent = timeLeft;
+                    timerProgress.style.width = '100%';
+                    timerProgress.classList.remove('danger');
+                    timerBox.classList.remove('warning');
+
+                    if (timerInterval) {
+                        clearInterval(timerInterval);
+                    }
+
+                    timerInterval = setInterval(function() {
+                        timeLeft--;
+                        timerElement.textContent = timeLeft;
+                        timerProgress.style.width = (timeLeft / TOTAL_TIME * 100) + '%';
+
+                        // تحديث ARIA
+                        timerProgress.parentElement.setAttribute('aria-valuenow', timeLeft);
+
+                        if (timeLeft <= 30) {
+                            timerProgress.classList.add('danger');
+                            timerBox.classList.add('warning');
+                        }
+
+                        if (timeLeft <= 0) {
+                            clearInterval(timerInterval);
+                            handleTimeOut();
+                        }
+                    }, 1000);
+                }
+
+                // التعامل مع انتهاء الوقت
+                function handleTimeOut() {
+                    if (!isGameActive) return;
+                    isGameActive = false;
+
+                    // خصم نقطة
+                    score -= 1;
+                    scoreElement.textContent = score;
+
+                    // إظهار الإجابات الصحيحة
+                    var correctNumbers = [];
+                    for (var i = 0; i < numberCells.length; i++) {
+                        var cell = numberCells[i];
+                        var number = parseInt(cell.textContent, 10);
+                        if (isDivisible(number, currentDivisor)) {
+                            correctNumbers.push(number);
+                            cell.classList.add('correct');
+                        }
+                    }
+
+                    resultElement.textContent = '⏰ انتهى الوقت! الأعداد الصحيحة: ' + correctNumbers.join('، ');
+                    resultElement.className = 'result error';
+                    resultElement.style.display = 'block';
+                    checkButton.disabled = true;
+                }
+
+                // تهيئة اللعبة
+                function initGame() {
+                    if (timerInterval) {
+                        clearInterval(timerInterval);
+                    }
+
+                    generateRandomNumbers();
+                    generateRandomDivisor();
+                    selectedNumbers = [];
+                    isGameActive = true;
+                    resultElement.style.display = 'none';
+                    hintBox.style.display = 'none';
+                    hintBox.setAttribute('aria-hidden', 'true');
+                    checkButton.disabled = true;
+                    timerBox.classList.remove('warning');
+
+                    for (var i = 0; i < numberCells.length; i++) {
+                        var cell = numberCells[i];
+                        cell.classList.remove('selected', 'correct', 'incorrect');
+                        cell.setAttribute('aria-selected', 'false');
+                    }
+
+                    startTimer();
+                }
+
+                // التحقق من القابلية للقسمة
+                function isDivisible(number, divisor) {
+                    return number % divisor === 0;
+                }
+
+                // إنشاء تأثير الاحتفال
+                function createConfetti() {
+                    var colors = ['#FFD700', '#006233', '#D21034', '#ffffff'];
+                    var fragment = document.createDocumentFragment();
+                    
+                    for (var i = 0; i < 50; i++) {
+                        var confetti = document.createElement('div');
+                        confetti.className = 'confetti';
+                        confetti.style.left = Math.random() * 100 + 'vw';
+                        confetti.style.top = '-10px';
+                        confetti.style.width = '10px';
+                        confetti.style.height = '10px';
+                        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                        confetti.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+                        confetti.style.position = 'fixed';
+                        fragment.appendChild(confetti);
+                    }
+                    
+                    document.body.appendChild(fragment);
+                    
+                    // تحريك الـ confetti
+                    var confettiElements = document.querySelectorAll('.confetti');
+                    for (var j = 0; j < confettiElements.length; j++) {
+                        (function(el) {
+                            var duration = Math.random() * 2000 + 2000;
+                            var startTime = Date.now();
+                            
+                            function animate() {
+                                var elapsed = Date.now() - startTime;
+                                var progress = elapsed / duration;
+                                
+                                if (progress < 1) {
+                                    el.style.top = (-10 + progress * (window.innerHeight + 20)) + 'px';
+                                    el.style.opacity = 1 - progress;
+                                    requestAnimationFrame(animate);
+                                } else {
+                                    if (el.parentNode) {
+                                        el.parentNode.removeChild(el);
+                                    }
+                                }
+                            }
+                            
+                            requestAnimationFrame(animate);
+                        })(confettiElements[j]);
+                    }
+                }
+
+                // التحقق من الإجابة
+                function checkAnswer() {
+                    if (!isGameActive) return;
+
+                    clearInterval(timerInterval);
+                    isGameActive = false;
+
+                    var correctNumbers = [];
+                    var userCorrect = 0;
+
+                    // تحديد الأعداد الصحيحة
+                    for (var i = 0; i < numberCells.length; i++) {
+                        var cell = numberCells[i];
+                        var number = parseInt(cell.textContent, 10);
+                        if (isDivisible(number, currentDivisor)) {
+                            correctNumbers.push(number);
+                        }
+                    }
+
+                    // التحقق من الاختيارات
+                    for (var j = 0; j < numberCells.length; j++) {
+                        var cellCheck = numberCells[j];
+                        var numCheck = parseInt(cellCheck.textContent, 10);
+                        var isCorrect = isDivisible(numCheck, currentDivisor);
+                        var isSelected = selectedNumbers.indexOf(numCheck) !== -1;
+
+                        if (isCorrect) {
+                            cellCheck.classList.add('correct');
+                            if (isSelected) userCorrect++;
+                        } else if (isSelected) {
+                            cellCheck.classList.add('incorrect');
+                        }
+                    }
+
+                    // حساب النتيجة
+                    var isPerfect = userCorrect === correctNumbers.length && 
+                                    selectedNumbers.length === correctNumbers.length;
+
+                    resultElement.style.display = 'block';
+
+                    if (isPerfect) {
+                        score += 2;
+                        resultElement.textContent = '🎉 أحسنت! إجابة صحيحة تماماً! +2 نقطة';
+                        resultElement.className = 'result success';
+                        createConfetti();
+                    } else {
+                        score -= 1;
+                        resultElement.textContent = '❌ ليس تماماً! الأعداد الصحيحة: ' + correctNumbers.join('، ') + ' | -1 نقطة';
+                        resultElement.className = 'result error';
+                    }
+
+                    scoreElement.textContent = score;
+                    checkButton.disabled = true;
+                }
+
+                // سؤال جديد
+                function nextQuestion() {
+                    questionNumber++;
+                    questionNumElement.textContent = questionNumber;
+                    initGame();
+                }
+
+                // معالج النقر على الخلايا
+                function handleCellClick(cell) {
+                    if (!isGameActive) return;
+
+                    var number = parseInt(cell.textContent, 10);
+                    var index = selectedNumbers.indexOf(number);
+
+                    if (index === -1) {
+                        selectedNumbers.push(number);
+                        cell.classList.add('selected');
+                        cell.setAttribute('aria-selected', 'true');
+                    } else {
+                        selectedNumbers.splice(index, 1);
+                        cell.classList.remove('selected');
+                        cell.setAttribute('aria-selected', 'false');
+                    }
+
+                    checkButton.disabled = selectedNumbers.length === 0;
+                }
+
+                // مستمعي الأحداث للخلايا
+                for (var i = 0; i < numberCells.length; i++) {
+                    (function(cell) {
+                        cell.addEventListener('click', function() {
+                            handleCellClick(cell);
+                        });
+                        
+                        // دعم لوحة المفاتيح
+                        cell.addEventListener('keydown', function(e) {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                handleCellClick(cell);
+                            }
+                        });
+                    })(numberCells[i]);
+                }
+
+                checkButton.addEventListener('click', checkAnswer);
+                newGameButton.addEventListener('click', nextQuestion);
+
+                hintButton.addEventListener('click', function() {
+                    var isHidden = hintBox.style.display === 'none';
+                    hintBox.style.display = isHidden ? 'block' : 'none';
+                    hintBox.setAttribute('aria-hidden', isHidden ? 'false' : 'true');
+                    hintButton.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+                });
+
+                // بدء اللعبة
+                initGame();
+
+                // تنظيف عند مغادرة الصفحة
+                window.addEventListener('beforeunload', function() {
+                    if (timerInterval) {
+                        clearInterval(timerInterval);
+                    }
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
